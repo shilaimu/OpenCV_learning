@@ -1,0 +1,45 @@
+# image mix
+# void addWeighted(InputArray src1, double alpha, InputArray src2, double beta, double gamma, OutputArray dst, int dtype=-1);  
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+using namespace cv;
+using namespace std;
+
+int main()
+{
+    //imgread &imgshow
+    Mat girl = imread("./data/琴女.jpg");
+    namedWindow("[girl]");
+    imshow("[girl]",girl);
+
+    //image mix
+    Mat lol = imread("./data/lol.jpg");
+    Mat logo = imread("./data/logo.jpg");
+
+    namedWindow("raw image of lol");
+    imshow("raw image of lol",lol);
+    namedWindow("raw image of logo");
+    imshow("raw image of logo",logo);
+
+    Mat imageROI;
+    //method 1
+    imageROI = lol(Rect(800,350,logo.cols,logo.rows));
+    //method 2
+    //imageROI = lol(Range(350,350+logo.rows),range(800,800+logo.cols));
+
+    //mix of 2 images
+    addWeighted(imageROI , 0.5 , logo , 0.5 , 0, imageROI );
+
+    //show result
+    namedWindow("dota+logo");
+    imshow("dota+logo",lol);
+
+    //imwrite
+    imwrite("./data/lol with logo by wjh.jpg",lol);
+
+    waitKey();
+
+    return 0;
+}
