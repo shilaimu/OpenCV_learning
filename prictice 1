@@ -1,1 +1,20 @@
+# open an image
 
+#include <iostream>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+using namespace cv;
+//using namespace std;
+
+int main()
+{
+    //read a image 
+    Mat img = imread("./data/1.jpg");
+    //build a window
+    namedWindow("open_succeed");
+    //show the image
+    imshow("open_succeed",img );
+    //waite 6000 ms auto close
+    waitKey(6000);
+}
