@@ -1,1 +1,40 @@
 
+#include <iostream>
+#include <opencv/cv.h>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp>
+
+using namespace std;
+using namespace cv;
+
+bool MultiChannelBlending();
+
+int main()
+{
+    //system("color5E");
+    Mat lol,logo;
+    vector<Mat> channels;
+    Mat imageBlueChannel;
+
+    logo = imread("./data/logo.jpg",0);
+    lol  = imread("./data/lol.jpg");
+    if(!logo.data) { printf("logoimg read error\n"); return 0;}
+    if(!lol.data ) { printf("lol img read reeor\n"); return 0;}
+
+    split(lol,channels);
+
+    imageBlueChannel = channels.at(0);
+    
+    addWeighted(imageBlueChannel(Rect(100,100,logo.cols,logo.rows)),1.0,logo,0.5,0,imageBlueChannel(Rect(100,100,logo.cols,logo.rows)));
+
+    merge(channels,lol);
+
+    namedWindow("bluelol+logo");
+    imshow("bluelol+logo",lol);
+
+    waitKey(0);
+    return 0;
+}
+
+
+
